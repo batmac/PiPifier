@@ -42,8 +42,17 @@ function getVideo() {
     return document.getElementsByTagName('video')[0];
 }
 
+function getAllVideos() {
+    return document.getElementsByTagName('video');
+}
+
 function enablePiP() {
-    getVideo().webkitSetPresentationMode('picture-in-picture');
+    var videos = getAllVideos();
+    for(vid in videos) {
+        if(videos[vid].src && videos[vid].src.startsWith("blob")) {
+            videos[vid].webkitSetPresentationMode("picture-in-picture");
+        }
+    }
 }
 
 //----------------- Custom Button Methods -----------------
