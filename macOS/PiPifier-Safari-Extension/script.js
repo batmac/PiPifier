@@ -49,8 +49,8 @@ function getAllVideos() {
 function enablePiP() {
     var videos = getAllVideos();
     for(vid in videos) {
-        if(videos[vid].src && videos[vid].src.startsWith("blob")) {
-            videos[vid].webkitSetPresentationMode("picture-in-picture");
+        if(videos[vid].src && (videos[vid].src.startsWith("blob") || videos[vid].duration > 180)) {
+            videos[vid].webkitSetPresentationMode(videos[vid].webkitPresentationMode === 'picture-in-picture' ? 'inline' : 'picture-in-picture');
         }
     }
 }
@@ -165,7 +165,7 @@ function addNetflixButton(timeOutCounter) {
     buttonImage.style.verticalAlign = "middle";
     buttonImage.style.maxHeight = "40%";
     button.appendChild(buttonImage);
-    var playerStatusDiv = document.getElementsByClassName("player-status")[0];
+    var playerStatusDiv = document.getElementsByClassName("player-timedtext")[0];
     if (playerStatusDiv == null && timeOutCounter < 3) {
         //this is needed because the div is sometimes not reachable on the first load
         //also necessary to count up and stop at some time to avoid endless loop on main netflix page
